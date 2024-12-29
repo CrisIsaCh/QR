@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Procesar QR</title>
+</head>
+<body>
+  <h1>Procesando datos del QR</h1>
+  <p id="output"></p>
+
+  <script>
+    // Ejemplo de datos escaneados desde el QR (lo tendrías que recibir de un lector QR)
+    const scannedData = '{"amount":150.75,"currency":"USD","description":"Pago de servicio","transactionId":"TX1234567890"}';
+
+    // Decodificar los datos del JSON
+    const paymentInfo = JSON.parse(scannedData);
+
+    // Mostrar la información al usuario
+    document.getElementById("output").innerText = `
+      Monto: ${paymentInfo.amount} ${paymentInfo.currency}
+      Descripción: ${paymentInfo.description}
+      ID de transacción: ${paymentInfo.transactionId}
+    `;
+  </script>
+</body>
+</html>

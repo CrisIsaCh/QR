@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generar QR con redirección</title>
+  <style>
+    #qrcode {
+      margin: 20px;
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+  <h1>Generar QR con redirección a una página</h1>
+  <div id="qrcode"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script>
+    // Información del monto
+    const amount = 150.75; // Monto a pagar
+    const baseURL = "https://mi-sitio.com/pagar"; // URL de redirección
+
+    // Crear la URL con el monto como parámetro
+    const paymentURL = `${baseURL}?amount=${amount}`;
+
+    // Generar el QR con la URL
+    const qrcode = new QRCode(document.getElementById("qrcode"), {
+      text: paymentURL,
+      width: 256, // Tamaño del QR
+      height: 256,
+      colorDark: "#000000", // Color del QR
+      colorLight: "#ffffff", // Fondo del QR
+    });
+
+    console.log("QR generado con URL:", paymentURL);
+  </script>
+</body>
+</html>
