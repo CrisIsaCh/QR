@@ -4,44 +4,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QR</title>
+    <title>QR con JSON embebido y Redirección</title>
     <style>
         #qrcode {
-          margin: 20px;
-          display: inline-block;
+            margin: 20px;
+            display: inline-block;
         }
-      </style>
+    </style>
 </head>
 
 <body>
-    <h1>Generar QR con monto a pagar</h1>
+    <h1>Generar QR con JSON embebido y Redirección</h1>
     <div id="qrcode"></div>
-  
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script>
-      // Información del pago
-      const paymentInfo = [{
-        amount: 100.50,       // Monto a pagar
-        currency: "USD",      // Moneda
-        description: "Pago de servicio",
-      }];
-  
-      // Convertir el objeto en un JSON string
-      const qrData = JSON.stringify(paymentInfo);
-  
-      // Generar el QR
-      const qrcode = new QRCode(document.getElementById("qrcode"), {
-        text: qrData,
-        width: 180, // Tamaño del QR
-        height: 180,
-        colorDark: "#000000", // Color del QR
-        colorLight: "#ffffff", // Fondo del QR
-      });
+        // URL de la página de destino
+        const baseURL = "https://mi-sitio.com/pagina-destino";
+
+        // Datos JSON que deseamos embebir
+        const jsonData = {
+            amount: 150.75,
+            currency: "USD",
+            description: "Pago de servicio",
+            transactionId: "TX1234567890",
+            date: "2024-12-27",
+        };
+
+        // Combinar la URL y el JSON en un único texto
+        const qrContent = JSON.stringify({
+            url: baseURL,
+            data: jsonData,
+        });
+
+        // Generar el QR con el contenido combinado
+        const qrcode = new QRCode(document.getElementById("qrcode"), {
+            text: qrContent,
+            width: 256,
+            height: 256,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+        });
+
+        console.log("Contenido del QR:", qrContent);
     </script>
-
-
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </body>
 
 </html>

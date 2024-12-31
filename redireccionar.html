@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Generar QR con redirección</title>
+  <title>Generar QR con Redirección y JSON</title>
   <style>
     #qrcode {
       margin: 20px;
@@ -12,28 +12,76 @@
   </style>
 </head>
 <body>
-  <h1>Generar QR con redirección a una página</h1>
+  <h1>Generar QR con Redirección y JSON Embebido</h1>
   <div id="qrcode"></div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
   <script>
-    // Información del monto
-    const amount = 150.75; // Monto a pagar
-    const baseURL = "https://mi-sitio.com/pagar"; // URL de redirección
+    // Página de destino
+    const baseURL = "https://crisisach.github.io/QR/";
 
-    // Crear la URL con el monto como parámetro
-    const paymentURL = `${baseURL}?amount=${amount}`;
+    // Objeto JSON con datos que queremos embebir
+    const jsonData = {
+    "subtotalgral": 49050,
+    "totalgral": 49050,
+    "productos": [
+        {
+            "id": 2,
+            "nombre": "Vegetarian Stir-Fry",
+            "cantidad": 2,
+            "subtotal": 10900
+        },
+        {
+            "id": 5,
+            "nombre": "Mango Salsa Chicken",
+            "cantidad": 1,
+            "subtotal": 5450
+        },
+        {
+            "id": 6,
+            "nombre": "Quinoa Salad with Avocado",
+            "cantidad": 1,
+            "subtotal": 5450
+        },
+        {
+            "id": 3,
+            "nombre": "Chocolate Chip Cookies",
+            "cantidad": 1,
+            "subtotal": 5450
+        },
+        {
+            "id": 1,
+            "nombre": "Classic Margherita Pizza",
+            "cantidad": 1,
+            "subtotal": 5450
+        },
+        {
+            "id": 4,
+            "nombre": "Chicken Alfredo Pasta",
+            "cantidad": 3,
+            "subtotal": 16350
+        }
+    ]
+}
 
-    // Generar el QR con la URL
+    // Convertir el JSON a base64 para incluirlo en la URL
+    const encodedData = btoa(JSON.stringify(jsonData));
+
+    // Construir la URL con los datos embebidos
+    const fullURL = `${baseURL}?data=${encodedData}`;
+
+    // Generar el código QR con la URL
     const qrcode = new QRCode(document.getElementById("qrcode"), {
-      text: paymentURL,
+      text: fullURL,
       width: 256, // Tamaño del QR
       height: 256,
       colorDark: "#000000", // Color del QR
-      colorLight: "#ffffff", // Fondo del QR
+      colorLight: "#ffffff", // Fondo
+      correctLevel : QRCode.CorrectLevel.L
     });
 
-    console.log("QR generado con URL:", paymentURL);
+    console.log("URL generada para el QR:", fullURL);
   </script>
 </body>
 </html>

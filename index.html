@@ -3,25 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Procesar QR</title>
+  <title>Procesar JSON desde el QR</title>
 </head>
 <body>
-  <h1>Procesando datos del QR</h1>
-  <p id="output"></p>
+  <h1>Procesar JSON desde el QR</h1>
+  <div id="output">Cargando datos...</div>
 
   <script>
-    // Ejemplo de datos escaneados desde el QR (lo tendrías que recibir de un lector QR)
-    const scannedData = '{"amount":150.75,"currency":"USD","description":"Pago de servicio","transactionId":"TX1234567890"}';
+    // Obtener los parámetros de la URL
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    console.log(urlParams);
+    
 
-    // Decodificar los datos del JSON
-    const paymentInfo = JSON.parse(scannedData);
+    // Recuperar el parámetro 'data' codificado en base64
+    const encodedData = urlParams.get("data");
 
-    // Mostrar la información al usuario
-    document.getElementById("output").innerText = `
-      Monto: ${paymentInfo.amount} ${paymentInfo.currency}
-      Descripción: ${paymentInfo.description}
-      ID de transacción: ${paymentInfo.transactionId}
-    `;
+    if (encodedData) {
+      try {
+        // Decodificar y convertir el JSON embebido
+        const jsonData = JSON.parse(atob(encodedData));
+
+        // Mostrar los datos en la página
+        document.getElementById("output").innerHTML = `
+          <p>Subtotal: ${jsonData.totalgral}</p>
+          <p>Total General: ${jsonData.description}</p>
+          <p>ID de Transacción:sdf1d1155d</p>
+          <p>Fecha: 13-12-2025</p>
+        `;
+
+        console.log("Datos recibidos y procesados:", jsonData);
+      } catch (error) {
+        document.getElementById("output").innerText = "Error al procesar los datos.";
+        console.error("Error al decodificar JSON:", error);
+      }
+    } else {
+      document.getElementById("output").innerText = "No se encontraron datos en la URL.";
+    }
   </script>
 </body>
 </html>
