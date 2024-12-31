@@ -26,10 +26,10 @@
 
         // Mostrar los datos en la página
         document.getElementById("output").innerHTML = `
-          <p>Subtotal: ${jsonData.totalgral}</p>
-          <p>Total General: ${jsonData.description}</p>
-          <p>ID de Transacción:sdf1d1155d</p>
-          <p>Fecha: 13-12-2025</p>
+          <p>Subtotal: ${jsonData.subtotalgral}</p>
+          <p>Total General: ${jsonData.totalgral}</p>
+          <p>ID de Transacción:${jsonData.productos[1].nombre}</p>
+          <p>Fecha: ${jsonData.productos[1].subtotal}</p>
         `;
 
         console.log("Datos recibidos y procesados:", jsonData);
